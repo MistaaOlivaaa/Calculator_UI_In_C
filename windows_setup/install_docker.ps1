@@ -93,9 +93,12 @@ if ($vcxsrvPath) {
         Write-Host "Please download and install manually from:" -ForegroundColor Yellow
         Write-Host "https://sourceforge.net/projects/vcxsrv/" -ForegroundColor Cyan
     }
+
+
 }
 
 Write-Host ""
+
 Write-Host "=== Installation Summary ===" -ForegroundColor Green
 Write-Host "1. WSL2: Available" -ForegroundColor Green
 Write-Host "2. Docker Desktop: Installed" -ForegroundColor Green
