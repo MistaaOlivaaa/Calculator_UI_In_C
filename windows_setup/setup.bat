@@ -1,4 +1,7 @@
 @echo off
+
+
+
 echo Calculator Project - Docker Setup
 echo =================================
 echo.
