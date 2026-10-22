@@ -12,7 +12,10 @@ pause >nul
 
 powershell -ExecutionPolicy Bypass -File "install_docker.ps1"
 
+
+
 echo.
 echo Setup completed! Check the output above for next steps.
 echo.
-pause 
+
+

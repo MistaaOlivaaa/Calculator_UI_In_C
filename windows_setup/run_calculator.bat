@@ -1,6 +1,7 @@
 @echo off
 echo Calculator Project - Quick Start
-echo ===============================
+echo ===========================
+
 echo.
 
 REM 
