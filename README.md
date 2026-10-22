@@ -1,11 +1,11 @@
 # 🧮 Calculator by MISTAAAOLIVAA
 
-
 ![Screenshot from 2025-07-02 06-43-24](https://github.com/user-attachments/assets/e6495c1a-3c08-451f-8b6d-a24a27feb2ef)
 
 *Modern GTK3 calculator interface*
 
-A sleek, modern calculator built with GTK3 Perfect for both Linux enthusiasts and Windows users who want a beautiful, functional calculator experience.
+A lightweight calculator written in C with a GTK3 graphical interface. The project
+can be built locally on Linux or run on Windows through Docker and an X11 server.
 
 ![Calculator Demo](https://img.shields.io/badge/Status-Ready%20to%20Use-brightgreen)
 ![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows-blue)
@@ -13,116 +13,131 @@ A sleek, modern calculator built with GTK3 Perfect for both Linux enthusiasts an
 
 ## ✨ Features
 
-- **Clean, modern interface** with GTK3
-- **Basic arithmetic operations**: +, -, ×, ÷
-- **Decimal number support**
-- **Clear function** for fresh calculations
-- **Cross-platform**: Works on Linux and Windows
-- **Lightweight**: No heavy dependencies
+- Clean, modern GTK3 interface
+- Basic arithmetic operations: `+`, `-`, `*`, `/`
+- Decimal number support
+- Clear function for fresh calculations
+- Lightweight C application
+- Linux build and Windows Docker workflow
 
-## 🚀 Quick Start
+## 📁 Project structure
 
-### For Linux Users 🐧
+```text
+Calculator_UI_In_C/
+├── src/
+│   ├── calculator.c       # Calculator source code
+│   └── Dockerfile         # Docker image definition
+├── windows_setup/
+│   ├── setup.bat          # Guided Windows setup
+│   ├── run_calculator.bat # Build and launch helper
+│   └── install_docker.ps1 # Docker, WSL2 and VcXsrv setup helper
+├── CMakeLists.txt         # CMake build configuration
+├── .dockerignore          # Docker build exclusions
+└── README.md              # Project documentation
+```
 
-If you're on Linux, you're in luck! This is super easy:
+## 🚀 Quick start
+
+### Linux 🐧
+
+Install GTK3 development files, CMake and a C compiler. On Ubuntu or Debian:
 
 ```bash
-# Clone or download the project
-cd Calculator
+sudo apt-get update
+sudo apt-get install build-essential cmake pkg-config libgtk-3-dev
+```
 
-# Build it
-mkdir build && cd build
-cmake .. && make
+Build the project from the repository root:
 
-# Run it
+```bash
+mkdir -p build
+cd build
+cmake ..
+cmake --build .
 ./calculator
 ```
 
-That's it! Your calculator should pop up with a beautiful interface.
+### Windows 🪟
 
-### For Windows Users 🪟
+The Windows workflow uses Docker Desktop to build the GTK3 application and an X11
+server such as VcXsrv to display the graphical window.
 
-Don't worry, we've got you covered! We've made it super easy with Docker.
+#### Option 1: Guided setup
 
-#### Option 1: Super Easy Setup (Recommended)
+1. Right-click `windows_setup/setup.bat` and run it as administrator.
+2. Restart Windows if WSL2 or Docker Desktop requests it.
+3. Start Docker Desktop.
+4. Start VcXsrv (XLaunch) with display number `0` and allow connections from
+   other hosts.
+5. From the repository root, run `windows_setup/run_calculator.bat`.
 
-1. **Double-click `setup.bat`** - This will install everything you need automatically
-2. **Restart your computer** (if it asks you to)
-3. **Start Docker Desktop** and **VcXsrv** from your Start menu
-4. **Double-click `run_calculator.bat`** - Your calculator will appear!
+#### Option 2: Manual setup
 
-#### Option 2: Manual Setup
+Install the following tools:
 
-If you prefer to do it manually:
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install)
+- [VcXsrv](https://sourceforge.net/projects/vcxsrv/)
 
-1. **Install Docker Desktop** from [docker.com](https://www.docker.com/products/docker-desktop/)
-2. **Install VcXsrv** from [sourceforge.net](https://sourceforge.net/projects/vcxsrv/)
-3. **Open PowerShell as Administrator** and run:
-   ```powershell
-   powershell -ExecutionPolicy Bypass -File "install_docker.ps1"
-   ```
-4. **Build and run**:
-   ```bash
-   docker build -t calculator .
-   docker run -e DISPLAY=host.docker.internal:0.0 --rm calculator
-   ```
+The setup helper can also be launched from an elevated PowerShell window:
 
-## 🛠️ What's Inside
-
-This project includes everything you need:
-
-```
-Calculator/
-├── calculator.c          # The main calculator code
-├── CMakeLists.txt        # Build configuration
-├── Dockerfile            # Docker setup for Windows
-├── setup.bat             # One-click Windows setup
-├── run_calculator.bat    # One-click calculator launch
-├── install_docker.ps1    # Automated dependency installer
-├── .dockerignore         # Optimized Docker builds
-└── README.md             # This file
+```powershell
+powershell -ExecutionPolicy Bypass -File ".\windows_setup\install_docker.ps1"
 ```
 
-## 🎯 How to Use
+After Docker Desktop and VcXsrv are running, build and start the calculator from
+the repository root:
 
-Once the calculator is running:
+```powershell
+docker build -t calculator -f .\src\Dockerfile .
+docker run -e DISPLAY=host.docker.internal:0.0 --rm calculator
+```
 
-- **Numbers**: Click the number buttons (0-9)
-- **Operations**: Click +, -, ×, or ÷
-- **Decimal**: Click the "." button for decimal numbers
-- **Clear**: Click "C" to start over
-- **Calculate**: Click "=" to see your result
+> **Note:** The Docker image uses `host.docker.internal:0.0` to connect to the
+> X11 server running on Windows. If the window does not appear, check that
+> VcXsrv is running and that its access-control setting allows Docker
+> connections.
+
+## 🎯 How to use
+
+- Click the number buttons to enter a value.
+- Use `+`, `-`, `*` or `/` to select an operation.
+- Click `.` to enter decimal values.
+- Click `C` to clear the current calculation.
+- Click `=` to display the result.
 
 ## 🔧 Troubleshooting
 
-### Linux Issues
-- **"GTK not found"**: Install GTK3: `sudo apt-get install libgtk-3-dev` (Ubuntu/Debian)
-- **"CMake not found"**: Install CMake: `sudo apt-get install cmake`
+### Linux
 
-### Windows Issues
-- **Calculator window doesn't appear**: Make sure VcXsrv is running and configured to allow connections
-- **Docker not working**: Make sure Docker Desktop is running
-- **Permission errors**: Run PowerShell as Administrator
+- **GTK3 not found:** install `libgtk-3-dev` and `pkg-config`.
+- **CMake not found:** install `cmake`.
+- **Build directory already exists:** remove its contents or use another
+  directory, then run `cmake ..` again.
+
+### Windows
+
+- **Docker is not running:** start Docker Desktop and wait until it is ready.
+- **The calculator window does not appear:** start VcXsrv, use display `0`, and
+  allow connections from other hosts.
+- **The setup script fails:** run PowerShell as administrator and ensure WSL2 is
+  available.
+- **The Docker build cannot find files:** run the commands from the repository
+  root and keep the `src/` directory in place.
 
 ## 🤝 Contributing
 
-Found a bug? Want to add a feature? Feel free to contribute!
-
-1. Fork the project
-2. Create a feature branch
-3. Make your changes
-4. Test on both Linux and Windows
-5. Submit a pull request
-
+1. Fork the repository.
+2. Create a feature branch.
+3. Make your changes.
+4. Test the application on the affected platform(s).
+5. Open a pull request.
 
 ## 🙏 Acknowledgments
 
-- Built with GTK3 for beautiful cross-platform GUI
-- Docker setup makes Windows compatibility a breeze
-- Thanks to the open source community for amazing tools
+- [GTK3](https://www.gtk.org/) for the graphical interface
+- Docker for the Windows build environment
+- The open-source community
 
----
 
-**Made with by MISTAAAOLIVAA**
 
-*Enjoy your calculations!* 🧮✨ 
