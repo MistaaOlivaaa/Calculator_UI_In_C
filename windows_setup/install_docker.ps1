@@ -71,7 +71,7 @@ if ($vcxsrvPath) {
     $vcxsrvUrl = "https://sourceforge.net/projects/vcxsrv/files/latest/download"
     $vcxsrvInstaller = "$env:TEMP\vcxsrv_setup.exe"
     
-    Write-Host "Downloading VcXsrv..." -ForegroundColor Yellow
+    Write-Host "Downloading VcXsrv." -ForegroundColor Yellow
     try {
         Invoke-WebRequest -Uri $vcxsrvUrl -OutFile $vcxsrvInstaller
         Write-Host "Download completed!" -ForegroundColor Green
@@ -108,6 +108,8 @@ Write-Host "Next steps:" -ForegroundColor Yellow
 Write-Host "1. Restart your computer if prompted" -ForegroundColor Cyan
 Write-Host "2. Start Docker Desktop" -ForegroundColor Cyan
 Write-Host "3. Start VcXsrv (XLaunch)" -ForegroundColor Cyan
+
+
 Write-Host "4. Open PowerShell in the project directory" -ForegroundColor Cyan
 Write-Host "5. Run: docker build -t calculator ." -ForegroundColor Cyan
 Write-Host "6. Run: docker run -e DISPLAY=host.docker.internal:0.0 --rm calculator" -ForegroundColor Cyan
