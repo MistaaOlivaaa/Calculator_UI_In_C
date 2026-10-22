@@ -16,8 +16,10 @@ void update_display(const char *text) {
 }
 
 
-double calculate(double a, double b, char op) {
-    switch (op) {
+double calculate(double a, double b, char op)
+ {
+    switch (op) 
+    {
         case '+': return a + b;
         case '-': return a - b;
         case '*': return a * b;
@@ -29,7 +31,8 @@ double calculate(double a, double b, char op) {
 }
 
 
-void on_digit_clicked(GtkWidget *widget, gpointer data) {
+void on_digit_clicked(GtkWidget *widget, gpointer data)
+ {
     const char *digit = (const char *)data;
     
     if (new_calculation) {
@@ -110,7 +113,8 @@ GtkWidget* create_button(const char *label, GCallback callback, gpointer data) {
     return button;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) 
+{
     gtk_init(&argc, &argv);
     
 
